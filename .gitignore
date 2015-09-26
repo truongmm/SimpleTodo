@@ -1,0 +1,11 @@
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Android Studio
+*.iml
+*.ipr
+*.iws
+.gradle/**
+build/**
+.idea/**
+import-summary.txt
