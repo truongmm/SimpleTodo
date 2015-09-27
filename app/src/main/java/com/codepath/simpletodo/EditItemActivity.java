@@ -28,7 +28,7 @@ public class EditItemActivity extends AppCompatActivity {
         // Initialize variables for views
         etEditTitle = (EditText) findViewById(R.id.etEditTitle);
         dropdown = (Spinner) findViewById(R.id.spinnerPriority);
-        String[] priorities = new String[]{"LOW", "MEDIUM", "HIGH"};
+        String[] priorities = new String[]{"LOW", "MED", "HIGH"};
         ArrayAdapter<String> dropdownAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, priorities);
         dropdown.setAdapter(dropdownAdapter);
 

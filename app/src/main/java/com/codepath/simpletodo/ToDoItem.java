@@ -5,16 +5,18 @@ package com.codepath.simpletodo;
  */
 
 public class ToDoItem {
-    public String title;
-    public String priority;
+    private String title;
+    private String priority;
+    private boolean isCompleted;
 
-    public ToDoItem(String title, String priority) {
+    public ToDoItem(String title, String priority, boolean isCompleted) {
         this.title = title;
         this.priority = priority;
+        this.isCompleted = isCompleted;
     }
 
     public String getDataInfo() {
-        return title + ";" + priority;
+        return isCompleted + ";" + title + ";" + priority;
     }
 
     public String getTitle() {
@@ -25,11 +27,19 @@ public class ToDoItem {
         return this.priority;
     }
 
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
     public void setTitle(String newTitle) {
         this.title = newTitle;
     }
 
     public void setPriority(String newPriority) {
         this.priority = newPriority;
+    }
+
+    public void toggleCompletion() {
+        isCompleted = !isCompleted;
     }
 }

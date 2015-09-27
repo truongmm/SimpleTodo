@@ -22,7 +22,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] Allow user to mark an item completed
+* [x] Allow user to mark an item completed
 
 ## Video Walkthrough
 

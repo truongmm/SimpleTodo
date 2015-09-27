@@ -87,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> data = new ArrayList<String>(FileUtils.readLines(todoFile));
             for (String item : data) {
                 String[] itemInfo = item.split(";");
-                String title = itemInfo[0];
-                String priority = itemInfo[1];
-                items.add(new ToDoItem(title, priority));
+                boolean isCompleted = Boolean.valueOf(itemInfo[0]);
+                String title = itemInfo[1];
+                String priority = itemInfo[2];
+                items.add(new ToDoItem(title, priority, isCompleted));
+
             }
         } catch (IOException e) {
             items = new ArrayList<ToDoItem>();
@@ -100,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
         File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todo.txt");
         try {
-            ArrayList<String> titles = new ArrayList<String>();
+            ArrayList<String> itemsInfo = new ArrayList<String>();
             for (ToDoItem item : items) {
-                titles.add(item.getDataInfo());
+                itemsInfo.add(item.getDataInfo());
             }
-            FileUtils.writeLines(todoFile, titles);
+            FileUtils.writeLines(todoFile, itemsInfo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             // Retrieve item info and create new item
             String title = data.getExtras().getString("title");
             String priority = data.getExtras().getString("priority");
-            ToDoItem newItem = new ToDoItem(title, priority);
+            ToDoItem newItem = new ToDoItem(title, priority, false);
 
             // Add new item
             items.add(newItem);
