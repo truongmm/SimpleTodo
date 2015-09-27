@@ -4,9 +4,14 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title" />
 
+    <TextView
+        android:id="@+id/tvPriority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Priority" />
 </LinearLayout>

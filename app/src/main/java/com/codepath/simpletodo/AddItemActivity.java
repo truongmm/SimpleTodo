@@ -10,63 +10,29 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class EditItemActivity extends AppCompatActivity {
-    // Declare variables for item
-    private String title;
-    private String priority;
-    private int position;
+public class AddItemActivity extends AppCompatActivity {
 
     // Declare variables for views
-    private EditText etEditTitle;
+    private EditText etTitle;
     private Spinner dropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_item);
+        setContentView(R.layout.activity_add_item);
 
         // Initialize variables for views
-        etEditTitle = (EditText) findViewById(R.id.etEditTitle);
+        etTitle = (EditText) findViewById(R.id.etTitle);
         dropdown = (Spinner) findViewById(R.id.spinnerPriority);
         String[] priorities = new String[]{"LOW", "MEDIUM", "HIGH"};
         ArrayAdapter<String> dropdownAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, priorities);
         dropdown.setAdapter(dropdownAdapter);
-
-        // Initialize variables for item
-        title = getIntent().getStringExtra("title");
-        priority = getIntent().getStringExtra("priority");
-        position = getIntent().getIntExtra("position", 0);
-        etEditTitle.setText(title);
-        etEditTitle.setSelection(title.length());
-        etEditTitle.requestFocus();
-        dropdown.setSelection(dropdownAdapter.getPosition(priority));
     }
-
-    public void onSaveItem(View view) {
-        // Get new value for item
-        String newTitle = etEditTitle.getText().toString();
-        String newPriority = dropdown.getSelectedItem().toString();
-
-        // Prepare data intent
-        Intent data = new Intent();
-
-        // Pass item info back as a result
-        data.putExtra("title", newTitle);
-        data.putExtra("priority", newPriority);
-        data.putExtra("position", position);
-
-        // Return the data
-        setResult(RESULT_OK, data);
-
-        // Take back to previous activity
-        finish();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit_item, menu);
+        getMenuInflater().inflate(R.menu.menu_add_item, menu);
         return true;
     }
 
@@ -83,5 +49,24 @@ public class EditItemActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onSaveNewItem(View view) {
+        // Get data for item
+        String title = etTitle.getText().toString();
+        String priority = dropdown.getSelectedItem().toString();
+
+        // Prepare data intent
+        Intent data = new Intent();
+
+        // Pass item info back as a result
+        data.putExtra("title", title);
+        data.putExtra("priority", priority);
+
+        // Return the data
+        setResult(RESULT_OK, data);
+
+        // Take back to previous activity
+        finish();
     }
 }

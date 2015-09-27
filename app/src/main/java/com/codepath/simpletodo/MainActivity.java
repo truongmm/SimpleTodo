@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private final int REQUEST_CODE = 20;
+    private final int ADD_REQUEST_CODE = 1;
+    private final int EDIT_REQUEST_CODE = 2;
 
     // Declare variables for items list
     private ItemsAdapter itemsAdapter;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize variables for views
-        etNewItem = (EditText) findViewById(R.id.etNewItem);
         lvItems = (ListView) findViewById(R.id.lvItems);
 
         // Initialize variables for items list
@@ -65,24 +65,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, EditItemActivity.class);
-                i.putExtra("item", items.get(position).getTitle());
+                ToDoItem item = items.get(position);
+                i.putExtra("title", item.getTitle());
+                i.putExtra("priority", item.getPriority());
                 i.putExtra("position", position);
-                startActivityForResult(i, REQUEST_CODE);
+                startActivityForResult(i, EDIT_REQUEST_CODE);
             }
         });
     }
 
-    public void onAddItem(View view) {
-        // Retrieve value of new item
-        ToDoItem newItem = new ToDoItem(etNewItem.getText().toString());
-
-        // Add item to items list
-        itemsAdapter.add(newItem);
-
-        // Reset input view
-        etNewItem.setText("");
-
-        writeItems();
+    public void onAddNewItem(View view) {
+        Intent i = new Intent(MainActivity.this, AddItemActivity.class);
+        startActivityForResult(i, ADD_REQUEST_CODE);
     }
 
     public void readItems() {
@@ -90,9 +84,12 @@ public class MainActivity extends AppCompatActivity {
         File todoFile = new File(filesDir, "todo.txt");
         try {
             items = new ArrayList<ToDoItem>();
-            ArrayList<String> titles = new ArrayList<String>(FileUtils.readLines(todoFile));
-            for (String title : titles) {
-                items.add(new ToDoItem(title));
+            ArrayList<String> data = new ArrayList<String>(FileUtils.readLines(todoFile));
+            for (String item : data) {
+                String[] itemInfo = item.split(";");
+                String title = itemInfo[0];
+                String priority = itemInfo[1];
+                items.add(new ToDoItem(title, priority));
             }
         } catch (IOException e) {
             items = new ArrayList<ToDoItem>();
@@ -105,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             ArrayList<String> titles = new ArrayList<String>();
             for (ToDoItem item : items) {
-                titles.add(item.getTitle());
+                titles.add(item.getDataInfo());
             }
             FileUtils.writeLines(todoFile, titles);
         } catch (IOException e) {
@@ -114,13 +111,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            // Retrieve item info
-            String itemValue = data.getExtras().getString("itemValue");
-            int position = data.getExtras().getInt("position", 0);
+        if (resultCode == RESULT_OK && requestCode == ADD_REQUEST_CODE) {
+            // Retrieve item info and create new item
+            String title = data.getExtras().getString("title");
+            String priority = data.getExtras().getString("priority");
+            ToDoItem newItem = new ToDoItem(title, priority);
+
+            // Add new item
+            items.add(newItem);
+
+            itemsAdapter.notifyDataSetChanged();
+            writeItems();
+        }
+        else if (resultCode == RESULT_OK && requestCode == EDIT_REQUEST_CODE) {
+            // Retrieve item info and create new item
+            String title = data.getExtras().getString("title");
+            String priority = data.getExtras().getString("priority");
+            int position = data.getExtras().getInt("position");
 
             // Update item info
-            items.get(position).setTitle(itemValue);
+            ToDoItem item = items.get(position);
+            item.setTitle(title);
+            item.setPriority(priority);
 
             itemsAdapter.notifyDataSetChanged();
             writeItems();
