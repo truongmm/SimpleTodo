@@ -36,4 +36,27 @@
 
     </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateRow">
+
+        <TextView
+            android:layout_width="245dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Due:"
+            android:id="@+id/tvDueDateLabel"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="230dp"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Due Date"
+            android:id="@+id/tvDueDate"
+            android:layout_gravity="right" />
+
+    </FrameLayout>
+
 </LinearLayout>

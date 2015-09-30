@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("title", item.getTitle());
                 i.putExtra("priority", item.getPriority());
                 i.putExtra("position", position);
+                i.putExtra("dueDate", item.getDueDate());
                 startActivityForResult(i, EDIT_REQUEST_CODE);
             }
         });
@@ -90,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 boolean isCompleted = Boolean.valueOf(itemInfo[0]);
                 String title = itemInfo[1];
                 String priority = itemInfo[2];
-                items.add(new ToDoItem(title, priority, isCompleted));
+                String dueDate = itemInfo[3];
+                items.add(new ToDoItem(title, priority, dueDate, isCompleted));
 
             }
         } catch (IOException e) {
@@ -117,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
             // Retrieve item info and create new item
             String title = data.getExtras().getString("title");
             String priority = data.getExtras().getString("priority");
-            ToDoItem newItem = new ToDoItem(title, priority, false);
+            String dueDate = data.getExtras().getString("dueDate");
+            ToDoItem newItem = new ToDoItem(title, priority, dueDate, false);
 
             // Add new item
             items.add(newItem);
@@ -129,12 +132,14 @@ public class MainActivity extends AppCompatActivity {
             // Retrieve item info and create new item
             String title = data.getExtras().getString("title");
             String priority = data.getExtras().getString("priority");
+            String dueDate = data.getExtras().getString("dueDate");
             int position = data.getExtras().getInt("position");
 
             // Update item info
             ToDoItem item = items.get(position);
             item.setTitle(title);
             item.setPriority(priority);
+            item.setDueDate(dueDate);
 
             itemsAdapter.notifyDataSetChanged();
             writeItems();

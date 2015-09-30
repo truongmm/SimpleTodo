@@ -34,6 +34,7 @@ public class ItemsAdapter extends ArrayAdapter<ToDoItem> {
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
         TextView tvPriority = (TextView) convertView.findViewById(R.id.tvPriority);
+        TextView tvDueDate = (TextView) convertView.findViewById(R.id.tvDueDate);
         final CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
         checkbox.setTag(position);
         checkbox.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +51,7 @@ public class ItemsAdapter extends ArrayAdapter<ToDoItem> {
         tvTitle.setText(item.getTitle());
         tvPriority.setText(item.getPriority());
         checkbox.setChecked(item.isCompleted());
+        tvDueDate.setText(item.getDueDate());
 
         // Return the completed view to render on screen
         return convertView;

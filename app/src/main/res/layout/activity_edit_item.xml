@@ -24,10 +24,10 @@
         android:text="@string/save"
         android:id="@+id/btnSaveEdit"
         android:onClick="onSaveItem"
-        android:layout_below="@+id/spinnerPriority"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="74dp"
+        android:layout_below="@+id/tvEditDueDate"
+        android:layout_alignRight="@+id/tvEditTitle"
+        android:layout_alignEnd="@+id/tvEditTitle" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,4 +58,27 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/edit_due_date"
+        android:id="@+id/tvEditDueDate"
+        android:layout_below="@+id/spinnerPriority"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/etEditDueDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvEditDueDate"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

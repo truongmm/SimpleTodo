@@ -1,5 +1,6 @@
 package com.codepath.simpletodo;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,18 +8,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class EditItemActivity extends AppCompatActivity {
     // Declare variables for item
     private String title;
     private String priority;
+    private String dueDate;
     private int position;
 
     // Declare variables for views
     private EditText etEditTitle;
     private Spinner dropdown;
+    private EditText etEditDueDate;
+    final Calendar calendar = Calendar.getInstance();
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MM/dd/yyyy", java.util.Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +44,46 @@ public class EditItemActivity extends AppCompatActivity {
         // Initialize variables for item
         title = getIntent().getStringExtra("title");
         priority = getIntent().getStringExtra("priority");
+        dueDate = getIntent().getStringExtra("dueDate");
         position = getIntent().getIntExtra("position", 0);
         etEditTitle.setText(title);
         etEditTitle.setSelection(title.length());
         etEditTitle.requestFocus();
         dropdown.setSelection(dropdownAdapter.getPosition(priority));
+        setItemDueDate();
+    }
+
+    public void setItemDueDate() {
+        etEditDueDate = (EditText) findViewById(R.id.etEditDueDate);
+        etEditDueDate.setFocusable(false);
+        etEditDueDate.setText(dueDate);
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                etEditDueDate.setText(dateFormat.format(calendar.getTime()));
+            }
+        };
+        etEditDueDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] formattedDueDate = dueDate.split(" ")[1].split("/");
+                int dueDateMonth = Integer.valueOf(formattedDueDate[0]) - 1;
+                int dueDateDay = Integer.valueOf(formattedDueDate[1]);
+                int dueDateYear = Integer.valueOf(formattedDueDate[2]);
+                new DatePickerDialog(EditItemActivity.this, date, dueDateYear, dueDateMonth, dueDateDay).show();
+            }
+        });
     }
 
     public void onSaveItem(View view) {
         // Get new value for item
         String newTitle = etEditTitle.getText().toString();
         String newPriority = dropdown.getSelectedItem().toString();
+        String newDueDate = etEditDueDate.getText().toString();
 
         // Prepare data intent
         Intent data = new Intent();
@@ -53,6 +91,7 @@ public class EditItemActivity extends AppCompatActivity {
         // Pass item info back as a result
         data.putExtra("title", newTitle);
         data.putExtra("priority", newPriority);
+        data.putExtra("dueDate", newDueDate);
         data.putExtra("position", position);
 
         // Return the data

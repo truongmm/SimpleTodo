@@ -7,16 +7,18 @@ package com.codepath.simpletodo;
 public class ToDoItem {
     private String title;
     private String priority;
+    private String dueDate;
     private boolean isCompleted;
 
-    public ToDoItem(String title, String priority, boolean isCompleted) {
+    public ToDoItem(String title, String priority, String dueDate, boolean isCompleted) {
         this.title = title;
         this.priority = priority;
+        this.dueDate = dueDate;
         this.isCompleted = isCompleted;
     }
 
     public String getDataInfo() {
-        return isCompleted + ";" + title + ";" + priority;
+        return isCompleted + ";" + title + ";" + priority + ";" + dueDate;
     }
 
     public String getTitle() {
@@ -25,6 +27,10 @@ public class ToDoItem {
 
     public String getPriority() {
         return this.priority;
+    }
+
+    public String getDueDate() {
+        return this.dueDate;
     }
 
     public boolean isCompleted() {
@@ -37,6 +43,10 @@ public class ToDoItem {
 
     public void setPriority(String newPriority) {
         this.priority = newPriority;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 
     public void toggleCompletion() {
