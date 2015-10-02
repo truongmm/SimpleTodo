@@ -1,6 +1,7 @@
 package com.codepath.simpletodo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class ItemsAdapter extends ArrayAdapter<ToDoItem> {
         // Populate the data into the template view using the data object
         tvTitle.setText(item.getTitle());
         tvPriority.setText(item.getPriority());
+        tvPriority.setTextColor(Color.parseColor(item.getPriorityColor()));
         checkbox.setChecked(item.isCompleted());
         tvDueDate.setText(item.getDueDate());
 

@@ -21,6 +21,23 @@ public class ToDoItem {
         return isCompleted + ";" + title + ";" + priority + ";" + dueDate;
     }
 
+    public String getPriorityColor() {
+        String priorityColor = "#FFFFFF";
+        switch (priority)
+        {
+            case "LOW":
+                priorityColor = "#FFDB4D";
+                break;
+            case "MED":
+                priorityColor = "#FFA347";
+                break;
+            case "HIGH":
+                priorityColor = "#FF4719";
+                break;
+        }
+        return priorityColor;
+    }
+
     public String getTitle() {
         return this.title;
     }
@@ -35,6 +52,10 @@ public class ToDoItem {
 
     public boolean isCompleted() {
         return isCompleted;
+    }
+
+    public void markSelected() {
+        this.isCompleted = true;
     }
 
     public void setTitle(String newTitle) {

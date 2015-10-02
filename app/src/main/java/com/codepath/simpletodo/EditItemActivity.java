@@ -2,6 +2,7 @@ package com.codepath.simpletodo;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,6 +34,7 @@ public class EditItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
+        setActivityBackgroundColor();
 
         // Initialize variables for views
         etEditTitle = (EditText) findViewById(R.id.etEditTitle);
@@ -51,6 +53,11 @@ public class EditItemActivity extends AppCompatActivity {
         etEditTitle.requestFocus();
         dropdown.setSelection(dropdownAdapter.getPosition(priority));
         setItemDueDate();
+    }
+
+    public void setActivityBackgroundColor() {
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(Color.parseColor("#DDDDDD"));
     }
 
     public void setItemDueDate() {
@@ -115,12 +122,6 @@ public class EditItemActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 }

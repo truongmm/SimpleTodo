@@ -1,22 +1,22 @@
 package com.codepath.simpletodo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
     private final int ADD_REQUEST_CODE = 1;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setActivityBackgroundColor();
 
         // Initialize variables for views
         lvItems = (ListView) findViewById(R.id.lvItems);
@@ -47,15 +48,18 @@ public class MainActivity extends AppCompatActivity {
         setupListeners();
     }
 
+    public void setActivityBackgroundColor() {
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(Color.parseColor("#DDDDDD"));
+    }
+
     private void setupListeners() {
         // Remove item from items list on item long lick
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 items.remove(position);
-                itemsAdapter.notifyDataSetChanged();
-
-                writeItems();
+                updateData();
                 return true;
             }
         });
@@ -75,9 +79,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void onAddNewItem(View view) {
+    public void addNewItem() {
         Intent i = new Intent(MainActivity.this, AddItemActivity.class);
         startActivityForResult(i, ADD_REQUEST_CODE);
+    }
+
+    public void trashSelectedItems() {
+        Iterator<ToDoItem> itemsList = items.iterator();
+        while (itemsList.hasNext())
+        {
+            ToDoItem item = itemsList.next();
+            if (item.isCompleted())
+                itemsList.remove();
+        }
+        updateData();
+    }
+
+    public void checkAllItems() {
+        for (int i=0; i<items.size(); i++) {
+            items.get(i).markSelected();
+        }
+        updateData();
+    }
+
+    public void updateData() {
+        itemsAdapter.notifyDataSetChanged();
+        writeItems();
     }
 
     public void readItems() {
@@ -124,9 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Add new item
             items.add(newItem);
-
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
+            updateData();
         }
         else if (resultCode == RESULT_OK && requestCode == EDIT_REQUEST_CODE) {
             // Retrieve item info and create new item
@@ -140,9 +165,7 @@ public class MainActivity extends AppCompatActivity {
             item.setTitle(title);
             item.setPriority(priority);
             item.setDueDate(dueDate);
-
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
+            updateData();
         }
     }
 
@@ -159,12 +182,17 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.add:
+                addNewItem();
+                return true;
+            case R.id.trash:
+                trashSelectedItems();
+                return true;
+            case R.id.check:
+                checkAllItems();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
