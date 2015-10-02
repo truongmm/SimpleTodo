@@ -6,7 +6,7 @@ Submitted by: Melody Truong
 
 Time spent: 3 hours spent in total
 
-## User Stories
+## Required User Stories
 
 The following **required** functionality is completed:
 
@@ -14,20 +14,9 @@ The following **required** functionality is completed:
 * [x] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list
 * [x] User can **persist todo items** and retrieve them properly on app restart
 
-The following **optional** features are implemented:
+#### Video Walkthrough
 
-* [x] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
-* [x] Add support for completion due dates for todo items (and display within listview item)
-* [x] Add support for selecting the priority of each todo item (and display in listview item)
-* [ ] Tweak the style improving the UI / UX, play with colors, images or backgrounds
-
-The following **additional** features are implemented:
-
-* [x] Allow user to mark an item completed
-
-## Video Walkthrough
-
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of the implemented required user stories:
 
 - - -
 
@@ -54,4 +43,56 @@ User can retrieve items properly on app restart.
 ![user_restart_app](https://cloud.githubusercontent.com/assets/5839078/10120042/92b2a462-645e-11e5-8026-06aade80ffaf.gif)
 
 - - -
+
+## Additional User Stories
+
+The following **optional** features are implemented:
+
+* [x] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
+* [x] Add support for completion due dates for todo items (and display within listview item)
+* [x] Add support for selecting the priority of each todo item (and display in listview item)
+* [x] Tweak the style improving the UI / UX, play with colors, images or backgrounds
+
+The following **additional** features are implemented:
+
+* [x] User can mark an item as completed
+* [x] User can mark all items completed
+* [x] User can trash completed items
+
+#### Video Walkthrough
+
+Here's a walkthrough of the implemented additional user stories:
+
+- - -
+
+User can specify a due date for todo items.
+
+![user_add_due_date](https://cloud.githubusercontent.com/assets/5839078/10242102/31bef6d0-68a3-11e5-8b9e-3b3612e51a6d.gif)
+
+- - -
+
+User can specify a priority for todo items.
+
+![user_add_priority](https://cloud.githubusercontent.com/assets/5839078/10242177/de218884-68a3-11e5-9023-46e3d7ef3398.gif)
+
+- - -
+
+User can mark an item as completed.
+
+![user_mark_completed](https://cloud.githubusercontent.com/assets/5839078/10242257/696551f0-68a4-11e5-850c-0df9e3035b3a.gif)
+
+
+- - -
+
+User can mark all items completed.
+
+![user_mark_all_completed](https://cloud.githubusercontent.com/assets/5839078/10242634/0e6432c8-68a7-11e5-8fa6-b156b37d8307.gif)
+
+- - -
+
+User can trash completed items.
+
+![user_trash_completed](https://cloud.githubusercontent.com/assets/5839078/10242367/288570ec-68a5-11e5-9f58-1faa86d31a01.gif)
+
+
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
